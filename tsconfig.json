@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "lib": [ "ES2015", "dom" ],
+    "module": "commonjs",
+    "outDir": "dist",
+    "strictNullChecks": true,
+    "target": "ES5",
+    "jsx": "react",
+    "typeRoots": ["./typings", "./node_modules/@types/"],
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  }
+}
