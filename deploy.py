@@ -80,3 +80,5 @@ def build():
 
   print('starting the app now...')
   ssh(ip, f'source .profile 2>/dev/null && {start}')
+
+build()
