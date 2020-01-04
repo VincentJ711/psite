@@ -27,6 +27,8 @@ export class Page {
           <title>${pp.title}</title>
           ${desc}
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+          <meta name="google" content="notranslate">
+          <meta http-equiv="Content-Language" content="en">
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <style>* { font-family: monospace}</style>
           <style id="${env.muicssid}">${mcss}</style>
