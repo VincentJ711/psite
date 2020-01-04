@@ -45,7 +45,7 @@ new (class {
       }, app).listen(443);
     } else {
       // make it so if .com is not present in request, subdomain can still be parsed
-      // this is important for the proxy filters below
+      // this is important for the proxy filters above
       app.set('subdomain offset', 1);
       app.listen(env.port, () => {});
     }

@@ -56,7 +56,7 @@ class Inner extends React.Component<IInnerProps, {}> {
             <a href='https://linkedin.com/in/vincent-sevilla-01238718b' target='_blank'>
               <i className={'fab fa-linkedin-in ' + styles.icon}></i>
             </a>
-            <a href='https://stackoverflow.com/users/7929314/vincent' target='_blank'>
+            <a href='https://stackoverflow.com/users/7929314/vincent?tab=profile' target='_blank'>
               <i className={'fab fa-stack-overflow ' + styles.icon}></i>
             </a>
           </h2>

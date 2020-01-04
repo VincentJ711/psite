@@ -1,0 +1,8 @@
+{
+  "port": 6300,
+  "serverHostNamePrefix": "psite",
+  "dmhost": "private internal ip for deployed site",
+  "dmhostdev": "localhost:8079",
+  "wmshost": "private internal ip for deployed site",
+  "wmshostdev": "localhost:8080"
+}

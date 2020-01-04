@@ -1,31 +1,34 @@
-const prod = !!require('yargs').argv.prod;
-const waitOn = require('wait-on');
-const proxy = require('http-proxy-middleware');
-const bs = require('browser-sync').create();
-const cp = require('child_process');
-const tap = require('gulp-tap');
-const path = require('path');
-const nodeExternals = require('webpack-node-externals');
 const browserify = require('browserify');
+const bSync = require('browser-sync');
 const buffer = require('vinyl-buffer');
 const cache = require('gulp-cached');
+const cp = require('child_process');
 const gulp = require('gulp');
 const gulpWatch = require('gulp-watch');
+const nodeExternals = require('webpack-node-externals');
+const path = require('path');
+const proxy = require('http-proxy-middleware');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
-const webpack = require('webpack');
+const tap = require('gulp-tap');
 const ts = require('gulp-typescript');
 const uglify = require('gulp-uglify');
+const waitOn = require('wait-on');
+const webpack = require('webpack');
+const yargs = require('yargs');
+
+let bs;
+let serverProcess;
+const prod = !!yargs.argv.prod;
 const appconfig = require('./.app.config.json');
 const project = ts.createProject('tsconfig.json', { isolatedModules: true });
 const serverFile = path.join(__dirname, '/dist/server/entry.js');
-const serverPort = appconfig.devPort;
-let serverProcess;
 const clientInFile = path.join(__dirname, '/dist/client/entry.js');
 const clientOutFile = path.join(__dirname, '/public/bundles/client.js');
+
+// this is where you should place a dependency that needs to be bundled for the browser
 const vendorBundler = browserify(undefined, {
   'require': [
-    // '@material-ui/icons/CompareArrows',
     '@material-ui/core',
     'jss',
     'react-dom',
@@ -40,44 +43,36 @@ const clientBundler = webpack({
     path: path.dirname(clientOutFile),
     filename: path.basename(clientOutFile)
   },
-  optimization: {
-    minimize: prod
-  },
-
-  // makes it so u dont bundle node modules but u make require statements
-  // for them in the browser. this is absolutely necessary.
-  externals: [nodeExternals()],
-
-  resolve: {
-    // necessary. i think it has to do with imports w/ no extension ie '../ts-file'
-    extensions: ['.js', '.json']
-  }
+  optimization: { minimize: prod },
+  externals: [ nodeExternals() ],
+  resolve: { extensions: ['.js', '.json'] }
 });
 
-if (prod) {
-  // reduces the bundle size for vendor.js
-  process.env.NODE_ENV = 'production';
+async function watchHelper() {
+  const res = await flatten();
+
+  if (res.clientChanged) {
+    await bundleClient();
+  }
+
+  if (res.clientChanged || res.serverChanged) {
+    await off();
+    await on();
+
+    if (bs) {
+      bs.reload();
+    } else {
+      console.log('initializing browser sync...');
+      bs = bSync.create();
+      bs.init(null, { proxy: `http://localhost:${appconfig.port}` });
+    }
+  }
 }
 
 async function watch() {
-  async function helper() {
-    const res = await flatten();
-
-    if (res.clientChanged) {
-      await bundleClient();
-    }
-
-    if (res.clientChanged || res.serverChanged) {
-      await off();
-      await on();
-      bs.reload();
-    }
-  }
-
   await new Promise(async() => {
-    gulpWatch(['src/**/*.*'], helper);
-    await helper();
-    bs.init(null, { proxy: `http://localhost:${serverPort}` });
+    gulpWatch(['src/**/*.*'], watchHelper);
+    await watchHelper();
   });
 }
 
@@ -106,6 +101,11 @@ async function flatten() {
 };
 
 async function bundleVendor() {
+  if (prod) {
+    // reduces the bundle size for vendor.js
+    process.env.NODE_ENV = 'production';
+  }
+
   await new Promise(res => {
     vendorBundler.bundle()
         .pipe(source('vendor.js'))
@@ -121,8 +121,6 @@ async function bundleClient() {
     console.warn('WARNING, client.js wont be minified. --prod wasnt given!');
   }
 
-  console.log('bundling client');
-
   await new Promise(res => {
     clientBundler.run((err, stats) => err ? console.log(err) : res());
   });
@@ -137,7 +135,7 @@ async function on() {
   serverProcess.stdout.pipe(process.stdout);
   serverProcess.stderr.pipe(process.stderr);
   await waitOn({
-    resources: [ `http://localhost:${serverPort}/status` ],
+    resources: [ `http://localhost:${appconfig.port}/status` ],
     delay: 0,
     interval: 50,
     timeout: 20000,
@@ -148,17 +146,7 @@ async function on() {
 async function off() {
   if (serverProcess) {
     serverProcess.kill();
-    console.log(`killed pid: ${serverProcess.pid}`);
   }
-};
-
-function exec(cmd, wd) {
-  return new Promise((resolve, reject) => {
-    cp.exec(cmd, {
-      cwd: wd,
-      maxBuffer: 1024 * 100000
-    }, (err, stdout) => err ? reject(err) : resolve(stdout));
-  });
 };
 
 gulp.task('default', [ 'watch' ]);
