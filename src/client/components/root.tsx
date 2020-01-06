@@ -64,41 +64,161 @@ class Inner extends React.Component<IInnerProps, {}> {
         <Grid container direction='row'>
           <Grid item sm={2} md={3} xl={4}/>
           <Grid item sm={8} md={6} xl={4} className={styles.mainContainer}>
-            <h1>about me</h1>
-            <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
-            <h1>projects</h1>
-            <p>i have many others not shown here...</p>
-            <h2>
+            <h1 className={styles.sectionHeaders}>about me</h1>
+            <p className={styles.paras}>
+              I'm an undergrad student at UCSD majoring in Math-Computer Science. I 
+              expect to be done in March, 2020. I'm from the Los Angeles area, 
+              but love San Diego. I'd prefer to stay in SD after college, but 
+              wouldn't mind adventuring out elsewhere if offered an awesome job.
+              <br/><br/>
+              My biggest hobby is coding. I have experience in several languages
+              including Java, C, C++, Node.js/Typescript, Python and bash. I 
+              would say however, I'm most comfortable with Typescript, Python, 
+              then Java. I'm quite familiar with the command line/vim and have 
+              experience in the following technologies: Docker, Cirrus CI, 
+              Elasticsearch, Redis, Google Cloud/Firebase and Digital Ocean. 
+              The next thing I want to learn is SQL and the next thing I want 
+              to master is git. I think git is the most important piece of 
+              software.
+              <br/><br/>
+              I try to get other things in the day to break up my coding, 
+              my favorites being hiking/cooking/hanging out with friends.
+            </p>
+            <h1 className={styles.sectionHeaders}>projects</h1>
+            <p className={styles.paras}>
+              I'm at ~35 repositories on Github, of which a fraction are public.
+              I've written a few web scrapers, a few Chrome plugins, some bots
+              for different games, games for different classes, scripts for
+              working with raspberry pi peripherals, scripts to deploy
+              Elasticsearch clusters to Compute Engine via Docker. I've even
+              written a small apple script to iMessage the MTS bus route I take
+              in the morning every couple minutes so I'm not late and sitting
+              outside in the freezing cold at 6am for too long 😂.
+              <br/><br/>
+              Anyway, here are a few of the things I've built.
+            </p>
+            <h2 className={styles.sectionHeaders}>
               <a className={styles.projectLink} href={this.props.wmsLink} target='_blank'>
                 <i className={'fas fa-link ' + styles.linkIcon}></i>
                 wm-scraper
               </a>
             </h2>
-            <p>project descript...</p>
-            <h2>
+            <p className={styles.paras}>
+              This is an application that helps you find cannabis related
+              items in the southern California area. It's a spring-boot Java
+              web app serving a React frontend. Java was picked for its GC
+              AND more importantly since its memory footprint is much lower
+              than dynamically typed languages like Python and Node.js.
+              <br/><br/>
+              The design is fairly straightforward. Socal data is scraped
+              everyday from Weedmaps through Firebase functions deployed
+              in regions around the world. The scrape is http triggered by
+              a cronjob set @ cron-job.org. Once the scrape function is triggered,
+              it determines what Weedmaps listings are in Socal. These listings
+              are then divided amongst several worker functions where their data 
+              is scraped, parsed, and stored in Firestore. Another cronjob is set
+              to go off later that triggers a combine function which combines the
+              scraped data in Firestore into a single data file hosted on GCS.
+              This data file is then loaded into the JVM heap for search queries
+              from the frontend. One advantage to this design is that scraping
+              is only done once a day over about 30mins. Another advantage is
+              since the worker scrape functions are deployed in different regions,
+              they are guaranteed to have different ip's which reduces the chance
+              of any scrape failing due to rate limiting.
+            </p>
+            <h2 className={styles.sectionHeaders}>
               <a className={styles.projectLink} href='https://github.com/VincentJ711/wm-scraper-py' target='_blank'>
                 <i className={'fas fa-link ' + styles.linkIcon}></i>
                 wm-scraper-py
               </a>
             </h2>
-            <p>project descript...</p>
-            <h2>
+            <p className={styles.paras}>
+              This was my final project for a class I took. It's a Python CLI
+              app that lets you search for cannabis related items sourced from
+              Weedmaps. More specifically, it has two commands. A scrape command
+              and a query command. Once you scrape a geographic area, you can
+              query for items in that area. Scrapes take time because of the
+              http requests, while queries are quick since the scraped dataset
+              is loaded from disk into RAM. This project was the motivation for
+              the other wm-scraper project you see on this page. While this was
+              good enough for me to find what I was looking for, it's not user
+              friendly to the 99% of humans that don't know how to use the command
+              line, let alone code. Hence the reason why I made the other
+              project.
+            </p>
+            <video className={styles.video} width="100%" height="350" controls>
+              <source src="videos/wm-scraper-py.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h2 className={styles.sectionHeaders}>
               <a className={styles.projectLink} href={this.props.dmLink} target='_blank'>
                 <i className={'fas fa-link ' + styles.linkIcon}></i>
                 donut man
               </a>
             </h2>
-            <p>project descript...</p>
-            {
-              // <h2>
-              //   <a className={styles.projectLink} href='https://google.com' target='_blank'>
-              //     <i className={'fas fa-link ' + styles.linkIcon}></i>
-              //    hex-puzzle
-              //   </a>
-              // </h2>
-              // <p>project descript...</p>
-            }
+            <p className={styles.paras}>
+              This is a web app for a donut shop I used to work at. While I was
+              there, I noticed their current website was outdated. I wanted to
+              try and make them a website for practice, my resume, and hopefully
+              a little coin if the owner wanted to use it. Unfortunately, he
+              didn't want to use it because he said he was going to use an
+              advertising company in the near future that would include a website
+              in their deal. Nevertheless, this was solid practice and I learned
+              a lot from the build.
+              <br/><br/>
+              It's a Node backend serving a React front end. It uses Firebase to
+              store employee auth info/the main content for each page. The point
+              of this was to make it so employees could login during a shift and
+              update the menu so customers always had a realtime status of what
+              donuts were in stock. The auth system I built included an entire
+              permissions system so every task required permission set by the 
+              admin (owner). 
+              <br/><br/>
+              One huge motivation for this project was an idea I wanted to
+              implement. I thought it would be cool to have a line cam, a
+              camera posted outside looking at the line. It would take stills
+              every minute and upload them to the web server so anyone could
+              see how long the line was at any point in the day. You should
+              know this isn't a regular donut shop. The line can get incredibly
+              long (1hr wait times) for hot donuts. In my opinion, a line cam
+              would've increased business by spreading customers out during the
+              day. I used to sit at home craving donuts but didn't want to go
+              because I thought the line would be long. If I had a way to check
+              the line length every hour, I would've been able to go once the
+              line died down. Anyway, I implemented the line cam with a Raspberry
+              Pi Zero W mounted in a fake security camera housing. It was taking
+              stills every minute for about a month before it stopped which is
+              why the last image you see is from September. I haven't had the
+              time to investigate why it stopped.
+            </p>
+            <h2 className={styles.sectionHeaders}>
+              <a className={styles.projectLink} href='https://github.com/VincentJ711/hex-puzzle' target='_blank'>
+                <i className={'fas fa-link ' + styles.linkIcon}></i>
+                hex-puzzle
+              </a>
+            </h2>
+            <p className={styles.paras}>
+              This is one of the first cool things I made. It's written in C++
+              since that's the only language I "knew" at the time. I know the
+              source code isn't great, but that's because I was a beginner.
+            </p>
+            <video className={styles.video} width="100%" height="350" controls>
+              <source src="videos/hex-puzzle.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
             <h1>contact</h1>
+            <p className={styles.paras}>
+              You can email me @ <a href="mailto:vincentj711@gmail.com">
+                vincentj711@gmail.com
+              </a>.
+              I want to be a Full Stack Developer, but am open to other
+              job offers. Thanks.
+            </p>
+            <p className={styles.paras + ' ' + styles.siteSrc}>
+              <a href="https://github.com/VincentJ711/psite" target='_blank'>
+                source for this site
+              </a>
+            </p>
           </Grid>
           <Grid item sm={2} md={3} xl={4}/>
         </Grid>
@@ -108,6 +228,22 @@ class Inner extends React.Component<IInnerProps, {}> {
 }
 
 const styles = {
+  siteSrc: style({
+    marginTop: 50,
+    marginBottom: 100,
+    textAlign: 'center'
+  }),
+  video: style({
+    marginTop: 32,
+    marginBottom: 32
+  }),
+  sectionHeaders: style({
+    marginTop: 32
+  }),
+  paras: style({
+    lineHeight: 2,
+    fontSize: 16
+  }),
   projectLink: style({
     textDecoration: 'none',
   }),
