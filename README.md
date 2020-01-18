@@ -47,8 +47,16 @@ I'm using digital ocean because the droplets are cheaper than Compute Engine/AWS
   - exit the shell then re ssh in
   - `nvm install 10.16.0`
 - exit session and setup passwordless ssh for each dev machine
-  - `ssh-keygen -t rsa -b 2048 -C root@<ip>`
-  - `ssh-add`
-  - `ssh-copy-id root@<ip>`
+  - `cd ~/.ssh`
+  - `mkdir ~/.ssh/keys`
+  - `ssh-keygen -t rsa -b 2048 -C root@<ip>` using keys/psite for the keyfile
+  - add to `~/.ssh/config` the following
+    ```
+    Host psite
+    HostName <ip>
+    IdentityFile ~/.ssh/keys/psite
+    User root
+    ```
+  - `ssh-copy-id -i ~/.ssh/keys/psite.pub psite`
   - now try to ssh in w/o a pass
 - paste the droplets public ip into `.serverip`
