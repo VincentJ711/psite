@@ -43,7 +43,7 @@ def build():
     ip = file.read().replace('\n', '').strip()
 
   # get the pid of the running app
-  pid = ssh(ip, 'pgrep node')
+  pid = ssh(ip, f'pgrep -f {rdir}')
 
   if (pid):
     print(f'web server running on pid: {pid}. killing now')
