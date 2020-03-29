@@ -21,7 +21,7 @@ def exec(cmd, pipestdout=False):
 def ssh(ip, cmd, pipestdout=False):
   """execs the given cmd under the root user @ the given ip"""
   if '"' in cmd: raise Exception('cant pass double quotes in cmd')
-  return exec(f'ssh root@{ip} "{cmd}"', pipestdout)
+  return exec(f'ssh psite "{cmd}"', pipestdout)
 
 def build():
   print('generating build files...')
@@ -61,18 +61,18 @@ def build():
   )
 
   print(f'uploading necessary files...')
-  exec(f'scp -r public/ root@{ip}:{rdir}/public', True)
-  exec(f'scp -r dist/ root@{ip}:{rdir}/dist', True)
-  exec(f'scp package.json root@{ip}:{rdir}', True)
-  exec(f'scp .app.config.json root@{ip}:{rdir}', True)
-  exec(f'scp .domain-cert root@{ip}:{rdir}', True)
-  exec(f'scp .domain-key root@{ip}:{rdir}', True)
+  exec(f'scp -r public/ psite:{rdir}/public', True)
+  exec(f'scp -r dist/ psite:{rdir}/dist', True)
+  exec(f'scp package.json psite:{rdir}', True)
+  exec(f'scp .app.config.json psite:{rdir}', True)
+  exec(f'scp .domain-cert psite:{rdir}', True)
+  exec(f'scp .domain-key psite:{rdir}', True)
 
   # you may want to upload the following 3 things if you are trying to
   # figure out why something is broken on the server
-  # exec(f'scp gulpfile.js root@{ip}:{rdir}', True)
-  # exec(f'scp tsconfig.json root@{ip}:{rdir}', True)
-  # exec(f'scp -r src/ root@{ip}:{rdir}/src', True)
+  # exec(f'scp gulpfile.js psite:{rdir}', True)
+  # exec(f'scp tsconfig.json psite:{rdir}', True)
+  # exec(f'scp -r src/ psite:{rdir}/src', True)
 
   print('installing node dependencies...')
   # source the profile so nvm/npm/node are found

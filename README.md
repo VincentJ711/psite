@@ -37,6 +37,9 @@ python -u deploy.py
 - on the zero ssl page, it'll give u instructions on how to verify the TXT records have loaded. This should take about 5-10 minutes. Once you've confirmed they're uploaded with `nslookup`, hit next and download the certificate.
 - place the cert/csr/key files in this directory, renaming them appropriately, see `src/server/env.ts` for their names. the request file should just be here for manual renewal every 3 months. its not a dependency.
 
+### ssl renewal
+- use the same domain key/csr as before but generate a new cert by pasting the csr [here](https://zerossl.com/free-ssl/#crt).
+
 ### digital ocean setup
 I'm using digital ocean because the droplets are cheaper than Compute Engine/AWS vms and are more than sufficient.
 - create the droplet (ubuntu)

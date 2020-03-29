@@ -146,8 +146,8 @@ class Inner extends React.Component<IInnerProps, {}> {
               line, let alone code. Hence the reason why I made the other
               project.
             </p>
-            <video className={styles.video} width="100%" height="350" controls>
-              <source src="videos/wm-scraper-py.mp4" type="video/mp4"/>
+            <video className={styles.video} width='100%' height='350' controls>
+              <source src='videos/wm-scraper-py.mp4' type='video/mp4'/>
               Your browser does not support the video tag.
             </video>
             <h2 className={styles.sectionHeaders}>
@@ -202,20 +202,20 @@ class Inner extends React.Component<IInnerProps, {}> {
               since that's the only language I "knew" at the time. I know the
               source code isn't great, but that's because I was a beginner.
             </p>
-            <video className={styles.video} width="100%" height="350" controls>
-              <source src="videos/hex-puzzle.mp4" type="video/mp4"/>
+            <video className={styles.video} width='100%' height='350' controls>
+              <source src='videos/hex-puzzle.mp4' type='video/mp4'/>
               Your browser does not support the video tag.
             </video>
             <h1>contact</h1>
             <p className={styles.paras}>
-              You can email me @ <a href="mailto:vincentj711@gmail.com">
+              You can email me @ <a href='mailto:vincentj711@gmail.com'>
                 vincentj711@gmail.com
               </a>.
               I want to be a Full Stack Developer, but am open to other
               job offers. Thanks.
             </p>
             <p className={styles.paras + ' ' + styles.siteSrc}>
-              <a href="https://github.com/VincentJ711/psite" target='_blank'>
+              <a href='https://github.com/VincentJ711/psite' target='_blank'>
                 source for this site
               </a>
             </p>
@@ -231,18 +231,18 @@ const styles = {
   siteSrc: style({
     marginTop: 50,
     marginBottom: 100,
-    textAlign: 'center'
+    textAlign: 'center',
   }),
   video: style({
     marginTop: 32,
-    marginBottom: 32
+    marginBottom: 32,
   }),
   sectionHeaders: style({
-    marginTop: 32
+    marginTop: 32,
   }),
   paras: style({
     lineHeight: 2,
-    fontSize: 16
+    fontSize: 16,
   }),
   projectLink: style({
     textDecoration: 'none',

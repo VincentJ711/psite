@@ -30,7 +30,7 @@ export class Page {
           <meta name="google" content="notranslate">
           <meta http-equiv="Content-Language" content="en">
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
-          <style>* { font-family: monospace}</style>
+          <style>* { font-family: Helvetica Neue, Helvetica, Aria}</style>
           <style id="${env.muicssid}">${mcss}</style>
           <style id="${env.tscssid}">${tcss}</style>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
