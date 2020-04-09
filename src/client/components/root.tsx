@@ -66,36 +66,22 @@ class Inner extends React.Component<IInnerProps, {}> {
           <Grid item sm={8} md={6} xl={4} className={styles.mainContainer}>
             <h1 className={styles.sectionHeaders}>about me</h1>
             <p className={styles.paras}>
-              I'm an undergrad student at UCSD majoring in Math-Computer Science. I 
-              expect to be done in March, 2020. I'm from the Los Angeles area, 
-              but love San Diego. I'd prefer to stay in SD after college, but 
-              wouldn't mind adventuring out elsewhere if offered an awesome job.
-              <br/><br/>
-              My biggest hobby is coding. I have experience in several languages
-              including Java, C, C++, Node.js/Typescript, Python and bash. I 
-              would say however, I'm most comfortable with Typescript, Python, 
-              then Java. I'm quite familiar with the command line/vim and have 
-              experience in the following technologies: Docker, Cirrus CI, 
-              Elasticsearch, Redis, Google Cloud/Firebase and Digital Ocean. 
-              The next thing I want to learn is SQL and the next thing I want 
-              to master is git. I think git is the most important piece of 
-              software.
-              <br/><br/>
-              I try to get other things in the day to break up my coding, 
-              my favorites being hiking/cooking/hanging out with friends.
+              I'm a recent graduate from UCSD with a B.S. in Math-Computer Science. 
+              I enjoy hiking, eating, and coding. I code most often in 
+              Node.js/Typescript but Python/Java are definitely not 
+              strangers to me. I'm currently in #quarantine here in San Diego 
+              brushing up on my CS fundamentals. Please reach out to me if you'd 
+              like to schedule an interview. I'm actively looking for a job in 
+              Software/Web Development.
             </p>
             <h1 className={styles.sectionHeaders}>projects</h1>
             <p className={styles.paras}>
-              I'm at ~35 repositories on Github, of which a fraction are public.
-              I've written a few web scrapers, a few Chrome plugins, some bots
-              for different games, games for different classes, scripts for
-              working with raspberry pi peripherals, scripts to deploy
-              Elasticsearch clusters to Compute Engine via Docker. I've even
-              written a small apple script to iMessage the MTS bus route I take
-              in the morning every couple minutes so I'm not late and sitting
-              outside in the freezing cold at 6am for too long 😂.
-              <br/><br/>
-              Anyway, here are a few of the things I've built.
+              Besides what you see here, I've written web scrapers, 
+              chrome plugins, bots for games, scripts for working with 
+              Raspberry PI peripherals, scripts to deploy Elasticsearch 
+              clusters to Compute Engine and I've even published a couple
+              npm packages. The next project I'm thinking about working on is 
+              a simple website to compare state/country COVID-19 data.
             </p>
             <h2 className={styles.sectionHeaders}>
               <a className={styles.projectLink} href={this.props.wmsLink} target='_blank'>
@@ -208,11 +194,12 @@ class Inner extends React.Component<IInnerProps, {}> {
             </video>
             <h1>contact</h1>
             <p className={styles.paras}>
-              You can email me @ <a href='mailto:vincentj711@gmail.com'>
+              The best place to reach out to me is via
+              my <a href='https://linkedin.com/in/vincent-sevilla-01238718b' target='_blank'>
+                LinkedIn page
+              </a> but you can also email me at <a href='mailto:vincentj711@gmail.com'>
                 vincentj711@gmail.com
               </a>.
-              I want to be a Full Stack Developer, but am open to other
-              job offers. Thanks.
             </p>
             <p className={styles.paras + ' ' + styles.siteSrc}>
               <a href='https://github.com/VincentJ711/psite' target='_blank'>
