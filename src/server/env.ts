@@ -13,6 +13,8 @@ export const env = {
   wmshost: deployed ? config.wmshost : config.wmshostdev,
   dmanSubdomain: 'dman',
   wmscraperSubdomain: 'wmscraper',
-  sslCertFile: path.join(__dirname, '../../.domain-cert'),
-  sslKeyFile: path.join(__dirname, '../../.domain-key'),
+
+  // generated via `certbot certonly --webroot` on the server
+  sslCertFile: '/etc/letsencrypt/live/vincentjs.com/fullchain.pem',
+  sslKeyFile: '/etc/letsencrypt/live/vincentjs.com/privkey.pem',
 };

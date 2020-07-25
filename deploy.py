@@ -65,8 +65,6 @@ def build():
   exec(f'scp -r dist/ psite:{rdir}/dist', True)
   exec(f'scp package.json psite:{rdir}', True)
   exec(f'scp .app.config.json psite:{rdir}', True)
-  exec(f'scp .domain-cert psite:{rdir}', True)
-  exec(f'scp .domain-key psite:{rdir}', True)
 
   # you may want to upload the following 3 things if you are trying to
   # figure out why something is broken on the server

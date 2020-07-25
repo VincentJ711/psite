@@ -25,20 +25,26 @@ You'll also need to create a `.app.config.json` file that has the structure give
 Note, there will be some broken links to my personal projects if you don't have them running locally (likely as some are private repos).
 
 ## deployment
-After following the steps below, just
 ```
 python -u deploy.py
 ```
 
-### ssl
-- download the domain key [here](https://zerossl.com/free-ssl/#csr). enter in the domains you want the ssl cert to be good for, ie `vincentjs.com www.vincentjs.com dman.vincentjs.com wmscraper.vincentjs.com` and select 2048 bit encryption. Don't forget to download/save the domain key file/certificate request file.
-- Paste the certificate request [here](https://zerossl.com/free-ssl/#crt) leaving the lets encrypt key field blank. Accept the terms/SA and select DNS verification. Then hit next.
-- Place the given TXT challenge records into your domain registrars dns records page.
-- on the zero ssl page, it'll give u instructions on how to verify the TXT records have loaded. This should take about 5-10 minutes. Once you've confirmed they're uploaded with `nslookup`, hit next and download the certificate.
-- place the cert/csr/key files in this directory, renaming them appropriately, see `src/server/env.ts` for their names. the request file should just be here for manual renewal every 3 months. its not a dependency.
+### ssl setup
+the server needs certbot installed
+```
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository universe
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install certbot
 
-### ssl renewal
-- use the same domain key/csr as before but generate a new cert by pasting the csr [here](https://zerossl.com/free-ssl/#crt).
+# then follow the prompt for generating ssl via
+sudo certbot certonly --webroot
+```
+the domains to include are: vincentjs.com,www.vincentjs.com,dman.vincentjs.com,wmscraper.vincentjs.com . it will ask where the webroots are for each domain.
+you will have to select /root/psite/public for each. this is where the .well-known/acme-challenge directory is it uses to verify you own your domain.
+see [here](https://letsencrypt.org/how-it-works/) and [here](https://certbot.eff.org/lets-encrypt/ubuntubionic-other) for reference on lets encrypt/cerbot usage.
 
 ### digital ocean setup
 I'm using digital ocean because the droplets are cheaper than Compute Engine/AWS vms and are more than sufficient.

@@ -20,15 +20,26 @@ new (class {
     app.use(compression());
     app.use(morgan('tiny'));
     app.use(proxy(`http://${env.dmhost}`, {
-      filter: req => req.subdomains.includes(env.dmanSubdomain),
+      filter: req => {
+        // the .well-known is where the ssl certbot places its challenge
+        // files. since this server is a proxy to the the dm/wm hosts
+        // lets just use the .well-known dir on this
+        // server for both of them, so if the req is for .well-known
+        // ignore it and let this server handle it
+        return req.subdomains.includes(env.dmanSubdomain) &&
+            !req.url.startsWith('/.well-known'); 
+      },
     }));
     app.use(proxy(`http://${env.wmshost}`, {
-      filter: req => req.subdomains.includes(env.wmscraperSubdomain),
+      filter: req => {
+        return req.subdomains.includes(env.wmscraperSubdomain) &&
+            !req.url.startsWith('/.well-known'); 
+      },
     }));
 
     this.setStandardHandlers();
     app.route('/bundles/client.js').get(this.clientBundleHandler.bind(this));
-    app.use(express.static(pubDir, { maxAge: env.staticCacheMillis, }));
+    app.use(express.static(pubDir, { maxAge: env.staticCacheMillis, dotfiles: 'allow', }));
 
     if (env.deployed) {
       // redirect http -> https
@@ -59,7 +70,9 @@ new (class {
 
   private setStandardHandlers() {
     const app = this.app;
-    app.route('/status').get((_req, res) => res.sendStatus(200));
+    app.route('/status').get((_req, res) => {
+      res.sendStatus(200);
+    });
     app.route('/').get(RootGet.handler);
   }
 })();
