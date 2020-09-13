@@ -2,10 +2,5 @@
 dist/
 node_modules/
 public/bundles/
-.app.config.json
 .DS_Store
-.domain-cert
-.domain-csr
-.domain-key
-.serverip
 TODO.md

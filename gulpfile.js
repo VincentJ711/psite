@@ -7,7 +7,6 @@ const gulp = require('gulp');
 const gulpWatch = require('gulp-watch');
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
-const proxy = require('http-proxy-middleware');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 const tap = require('gulp-tap');
@@ -20,7 +19,7 @@ const yargs = require('yargs');
 let bs;
 let serverProcess;
 const prod = !!yargs.argv.prod;
-const appconfig = require('./.app.config.json');
+const appPort = 5000;
 const project = ts.createProject('tsconfig.json', { isolatedModules: true });
 const serverFile = path.join(__dirname, '/dist/server/entry.js');
 const clientInFile = path.join(__dirname, '/dist/client/entry.js');
@@ -64,7 +63,7 @@ async function watchHelper() {
     } else {
       console.log('initializing browser sync...');
       bs = bSync.create();
-      bs.init(null, { proxy: `http://localhost:${appconfig.port}` });
+      bs.init(null, { proxy: `http://localhost:${appPort}` });
     }
   }
 }
@@ -135,7 +134,7 @@ async function on() {
   serverProcess.stdout.pipe(process.stdout);
   serverProcess.stderr.pipe(process.stderr);
   await waitOn({
-    resources: [ `http://localhost:${appconfig.port}/status` ],
+    resources: [ `http://localhost:${appPort}/status` ],
     delay: 0,
     interval: 50,
     timeout: 20000,
@@ -149,6 +148,14 @@ async function off() {
   }
 };
 
+async function build() {
+  await flatten()
+  await Promise.all([
+    bundleVendor(),
+    bundleClient()
+  ])
+}
+
 gulp.task('default', [ 'watch' ]);
 gulp.task('watch', watch);
 gulp.task('flatten', flatten);
@@ -156,3 +163,4 @@ gulp.task('bvendor', bundleVendor);
 gulp.task('bclient', bundleClient);
 gulp.task('on', on);
 gulp.task('off', off);
+gulp.task('build', build)

@@ -113,7 +113,8 @@ class Inner extends React.Component<IInnerProps, {}> {
               of any scrape failing due to rate limiting.
             </p>
             <h2 className={styles.sectionHeaders}>
-              <a className={styles.projectLink} href='https://github.com/VincentJ711/wm-scraper-py' target='_blank'>
+              <a className={styles.projectLink} 
+                  href='https://github.com/VincentJ711/wm-scraper-py' target='_blank'>
                 <i className={'fas fa-link ' + styles.linkIcon}></i>
                 wm-scraper-py
               </a>
@@ -178,7 +179,8 @@ class Inner extends React.Component<IInnerProps, {}> {
               time to investigate why it stopped.
             </p>
             <h2 className={styles.sectionHeaders}>
-              <a className={styles.projectLink} href='https://github.com/VincentJ711/hex-puzzle' target='_blank'>
+              <a className={styles.projectLink} 
+                  href='https://github.com/VincentJ711/hex-puzzle' target='_blank'>
                 <i className={'fas fa-link ' + styles.linkIcon}></i>
                 hex-puzzle
               </a>

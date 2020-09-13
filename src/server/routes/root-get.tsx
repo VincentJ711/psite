@@ -10,8 +10,8 @@ export class RootGet {
   static handler(req: Request, res: Response) {
     if (!RootGet.dmLink) {
       const port = env.deployed ? '' : `:${env.port}`;
-      RootGet.dmLink = `${req.protocol}://${env.dmanSubdomain}.${req.hostname}${port}`;
-      RootGet.wmsLink = `${req.protocol}://${env.wmscraperSubdomain}.${req.hostname}${port}`;
+      RootGet.dmLink = `${req.protocol}://${env.dmanSubdomain}.${env.domain}${port}`;
+      RootGet.wmsLink = `${req.protocol}://${env.wmscraperSubdomain}.${env.domain}${port}`;
     }
 
     const iState: IInitialState = {
