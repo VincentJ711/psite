@@ -1,7 +1,6 @@
 import {
   Grid,
 } from '@material-ui/core';
-import { SheetsRegistry, } from 'jss';
 import * as React from 'react';
 import { style, } from 'typestyle';
 import { Shell, } from './shell';
@@ -16,19 +15,13 @@ interface IInnerState {
 
 interface IRootProps {
   dmLink: string;
-  registry?: SheetsRegistry;
-  sheetManager?: Map<any, any>;
   wmsLink: string;
 }
 
 export class Root extends React.Component<IRootProps, {}> {
   render() {
     return (
-      <Shell
-        strict
-        registry={this.props.registry}
-        sheetManager={this.props.sheetManager}
-      >
+      <Shell strict>
         <Inner dmLink={this.props.dmLink} wmsLink={this.props.wmsLink}/>
       </Shell>
     );
@@ -42,7 +35,7 @@ class Inner extends React.Component<IInnerProps, {}> {
     return (
       <>
         <div className={styles.container}>
-          <img className={styles.portrait} src='/images/me.jpg'/>
+          <img className={styles.portrait} src='/images/me.jpg' alt='portrait'/>
           <h2 className={styles.name}>vincent</h2>
           <p className={styles.attrCont}>
             <span className={styles.attrHeart}>♥</span>
@@ -51,13 +44,13 @@ class Inner extends React.Component<IInnerProps, {}> {
           </p>
           <h2>
             <a href='https://github.com/VincentJ711' target='_blank'>
-              <i className={'fab fa-github ' + styles.icon}></i>
+              <i className={ 'fab fa-github ' + styles.icon }/>
             </a>
             <a href='https://linkedin.com/in/vincent-sevilla-01238718b' target='_blank'>
-              <i className={'fab fa-linkedin-in ' + styles.icon}></i>
+              <i className={ 'fab fa-linkedin-in ' + styles.icon }/>
             </a>
             <a href='https://stackoverflow.com/users/7929314/vincent?tab=profile' target='_blank'>
-              <i className={'fab fa-stack-overflow ' + styles.icon}></i>
+              <i className={ 'fab fa-stack-overflow ' + styles.icon }/>
             </a>
           </h2>
         </div>
@@ -85,7 +78,7 @@ class Inner extends React.Component<IInnerProps, {}> {
             </p>
             <h2 className={styles.sectionHeaders}>
               <a className={styles.projectLink} href={this.props.wmsLink} target='_blank'>
-                <i className={'fas fa-link ' + styles.linkIcon}></i>
+                <i className={ 'fas fa-link ' + styles.linkIcon }/>
                 wm-scraper
               </a>
             </h2>
@@ -115,7 +108,7 @@ class Inner extends React.Component<IInnerProps, {}> {
             <h2 className={styles.sectionHeaders}>
               <a className={styles.projectLink} 
                   href='https://github.com/VincentJ711/wm-scraper-py' target='_blank'>
-                <i className={'fas fa-link ' + styles.linkIcon}></i>
+                <i className={ 'fas fa-link ' + styles.linkIcon }/>
                 wm-scraper-py
               </a>
             </h2>
@@ -139,7 +132,7 @@ class Inner extends React.Component<IInnerProps, {}> {
             </video>
             <h2 className={styles.sectionHeaders}>
               <a className={styles.projectLink} href={this.props.dmLink} target='_blank'>
-                <i className={'fas fa-link ' + styles.linkIcon}></i>
+                <i className={ 'fas fa-link ' + styles.linkIcon }/>
                 donut man
               </a>
             </h2>
@@ -181,7 +174,7 @@ class Inner extends React.Component<IInnerProps, {}> {
             <h2 className={styles.sectionHeaders}>
               <a className={styles.projectLink} 
                   href='https://github.com/VincentJ711/hex-puzzle' target='_blank'>
-                <i className={'fas fa-link ' + styles.linkIcon}></i>
+                <i className={ 'fas fa-link ' + styles.linkIcon }/>
                 hex-puzzle
               </a>
             </h2>

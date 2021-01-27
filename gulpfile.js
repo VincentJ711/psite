@@ -11,7 +11,8 @@ const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 const tap = require('gulp-tap');
 const ts = require('gulp-typescript');
-const uglify = require('gulp-uglify');
+const terser = require('gulp-terser');
+const babelify = require('babelify');
 const waitOn = require('wait-on');
 const webpack = require('webpack');
 const yargs = require('yargs');
@@ -19,19 +20,23 @@ const yargs = require('yargs');
 let bs;
 let serverProcess;
 const prod = !!yargs.argv.prod;
-const appPort = 5000;
+const appPort = 8080;
 const project = ts.createProject('tsconfig.json', { isolatedModules: true });
 const serverFile = path.join(__dirname, '/dist/server/entry.js');
 const clientInFile = path.join(__dirname, '/dist/client/entry.js');
 const clientOutFile = path.join(__dirname, '/public/bundles/client.js');
 
 // this is where you should place a dependency that needs to be bundled for the browser
-const vendorBundler = browserify(undefined, {
+const vendorBundler = browserify({
+  transform: [
+      babelify.configure({
+        presets: ['@babel/preset-env']
+      })
+  ]
+}, {
   'require': [
     '@material-ui/core',
-    'jss',
     'react-dom',
-    'react-jss',
     'react',
     'typestyle'
   ]
@@ -109,9 +114,9 @@ async function bundleVendor() {
     vendorBundler.bundle()
         .pipe(source('vendor.js'))
         .pipe(buffer())
-        .pipe(uglify())
-        .pipe(gulp.dest('public/bundles'))
-        .on('finish', res);
+        .pipe(terser())
+        .pipe(gulp.dest('./public/bundles'))
+        .on('end', res);
   });
 }
 
@@ -148,14 +153,6 @@ async function off() {
   }
 };
 
-async function build() {
-  await flatten()
-  await Promise.all([
-    bundleVendor(),
-    bundleClient()
-  ])
-}
-
 gulp.task('default', [ 'watch' ]);
 gulp.task('watch', watch);
 gulp.task('flatten', flatten);
@@ -163,4 +160,3 @@ gulp.task('bvendor', bundleVendor);
 gulp.task('bclient', bundleClient);
 gulp.task('on', on);
 gulp.task('off', off);
-gulp.task('build', build)

@@ -2,10 +2,9 @@ const deployed = process.env.NODE_ENV === 'production';
 
 export const env = {
   deployed,
-  port: 5000,
+  port: 8080,
   staticCacheMillis: 3600000,
   staticClientBundleCacheSeconds: deployed ? 3600 : 0,
-  domain: deployed ? 'vincentjs.com' : 'localhost',
-  dmanSubdomain: 'dman',
-  wmscraperSubdomain: 'wmscraper',
+  dmanLink: 'https://dman.vincentjs.com',
+  wmscraperLink: 'https://wmscraper.vincentjs.com',
 };

@@ -4,3 +4,5 @@ node_modules/
 public/bundles/
 .DS_Store
 TODO.md
+.idea/
+package-lock.json

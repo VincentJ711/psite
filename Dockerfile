@@ -4,9 +4,20 @@ WORKDIR /root/psite
 
 COPY package.json .
 RUN npm i
-COPY public public
-COPY dist dist
-COPY gulpfile.js .
 
 ENV NODE_ENV=production
-CMD npm run gulp on
+
+COPY tslint.json ./
+COPY tsconfig.json ./
+COPY gulpfile.js ./
+
+COPY public public
+RUN rm -rf public/bundles
+RUN ./node_modules/.bin/gulp bvendor --prod
+
+COPY src src
+RUN ./node_modules/.bin/gulp flatten --prod
+RUN ./node_modules/.bin/gulp bclient --prod
+
+RUN npm run test
+CMD ./node_modules/.bin/gulp on

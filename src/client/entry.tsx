@@ -8,17 +8,26 @@ export interface IInitialState {
   wmsLink: string;
 }
 
-const istate: IInitialState = (window as any).__INITIAL_STATE__;
+const initialState: IInitialState = (window as any).__INITIAL_STATE__;
 
 document.addEventListener('DOMContentLoaded', _e => {
-  const path = window.location.pathname;
-  let ele: JSX.Element;
-
-  if (path === '/') {
-    ele = <Root wmsLink={istate.wmsLink} dmLink={istate.dmLink}/>;
-  } else {
+  if (window.location.pathname !== '/') {
     throw Error('unrecognized location');
   }
 
-  ReactDom.hydrate(ele as any, document.getElementById(env.htmlid));
+  const muiStyles = document.getElementById(env.muicssid);
+  const customStyles = document.getElementById(env.tscssid);
+
+  if (muiStyles) {
+    muiStyles.parentElement?.removeChild(muiStyles);
+  }
+
+  if (customStyles) {
+    customStyles.parentElement?.removeChild(customStyles);
+  }
+
+  ReactDom.hydrate(
+      <Root wmsLink={initialState.wmsLink} dmLink={initialState.dmLink}/>,
+      document.getElementById(env.htmlid)
+  );
 });

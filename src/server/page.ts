@@ -1,4 +1,4 @@
-import { SheetsRegistry, } from 'jss';
+import { ServerStyleSheets, } from '@material-ui/core/styles';
 import * as dom from 'react-dom/server';
 import * as serialize from 'serialize-javascript';
 import { getStyles, } from 'typestyle';
@@ -8,21 +8,21 @@ interface IPageParams {
   description?: string;
   ele: JSX.Element;
   initialState: any;
-  registry: SheetsRegistry;
   title: string;
 }
 
 export class Page {
   static asString(pp: IPageParams) {
-    const html = dom.renderToString(pp.ele);
-    const mcss = pp.registry.toString();
+    const sheets = new ServerStyleSheets();
+    const html = dom.renderToString(sheets.collect(pp.ele));
+    const mcss = sheets.toString();
     const tcss = getStyles();
     const desc = pp.description ?
         `<meta name="description" content="${pp.description}">` : '';
 
     return `
       <!DOCTYPE html>
-      <html style="height: 100%">
+      <html style="height: 100%" lang='en'>
         <head>${desc}
           <title>${pp.title}</title>
           ${desc}
@@ -30,7 +30,7 @@ export class Page {
           <meta name="google" content="notranslate">
           <meta http-equiv="Content-Language" content="en">
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
-          <style>* { font-family: Helvetica Neue, Helvetica, Aria}</style>
+          <style>* { font-family: Helvetica Neue, Helvetica, Aria, serif}</style>
           <style id="${env.muicssid}">${mcss}</style>
           <style id="${env.tscssid}">${tcss}</style>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
